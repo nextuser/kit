@@ -293,7 +293,7 @@ A convenience function that creates a new KeyPair from a 32-bytes `Uint8Array` p
 import { createKeyPairSignerFromPrivateKeyBytes, getUtf8Encoder } from '@solana/kit';
 
 const message = getUtf8Encoder().encode('Hello, World!');
-const seed = new Uint8Array(await crypto.subtle.digest('SHA-256', message));
+const seed = new Uint8Array(await crypto.subtle.digest('SHA-256', new Uint8Array(message)));
 
 const derivedSigner = await createKeyPairSignerFromPrivateKeyBytes(seed);
 ```
