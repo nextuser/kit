@@ -122,6 +122,7 @@ import {
     getOptionCodec,
     getStructCodec,
     getU64Codec,
+    getU32Codec,
     getU8Codec,
     Option,
 } from '@solana/kit';
@@ -130,11 +131,11 @@ const account = await fetchEncodedAccount(rpc, address('1234..5678'));
 assertAccountExists(account);
 
 const mintCodec = getStructCodec([
-    ['mintAuthority', getOptionCodec(getAddressCodec())], // [simplified]
+    ['mintAuthority', getOptionCodec(getAddressCodec(),{prefix:getU32Codec()})], // [simplified]
     ['supply', getU64Codec()],
     ['decimals', getU8Codec()],
     ['isInitialized', getBooleanCodec()],
-    ['freezeAuthority', getOptionCodec(getAddressCodec())], // [simplified]
+    ['freezeAuthority', getOptionCodec(getAddressCodec(),{prefix:getU32Codec()})], // [simplified]
 ]);
 
 const decodedData = mintCodec.decode(account.data);
